@@ -10,7 +10,7 @@ function App() {
       <Button
         variant="secondary"
         size="lg"
-        onClick={() => console.log("Hello")}
+        onClick={() => console.log("Button Clicked")}
       >
         Click Me
       </Button>
