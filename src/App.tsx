@@ -1,10 +1,23 @@
 import { Button } from "./components/ui/button";
 import { useAppSelector } from "./hooks";
+import {
+  HomeLayout,
+  Landing,
+  Error,
+  Products,
+  SingleProduct,
+  Cart,
+  About,
+  Register,
+  Login,
+  Orders,
+  Checkout,
+} from "./pages";
 
 function App() {
   const { name } = useAppSelector((state) => state.userState);
   console.log(name);
-  
+
   return (
     <div>
       <Button
