@@ -1,5 +1,5 @@
-import { Button } from "./components/ui/button";
-import { useAppSelector } from "./hooks";
+import { Router, RouterProvider, createBrowserRouter } from "react-router-dom";
+
 import {
   HomeLayout,
   Landing,
@@ -15,21 +15,33 @@ import {
 } from "./pages";
 
 function App() {
-  const { name } = useAppSelector((state) => state.userState);
-  console.log(name);
-
-  return (
-    <div>
-      <Button
-        variant="secondary"
-        size="lg"
-        onClick={() => console.log("Button Clicked")}
-      >
-        Click Me
-      </Button>
-      <h2 className="text-red-900 p-3">Hello People</h2>;
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Landing />,
+    },
+    {
+      path: "/cart",
+      element: <Cart />,
+    },
+    {
+      path: "/products",
+      element: <Products />,
+    },
+    {
+      path: "/singleProduct",
+      element: <SingleProduct />,
+    },
+    {
+      path: "/HomeLayout",
+      element: <HomeLayout />,
+    },
+    {
+      path: "*",
+      element: <Error />,
+    },
+  ]);
+  return <RouterProvider router={router} />;
 }
 
 export default App;
