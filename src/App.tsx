@@ -19,6 +19,7 @@ function App() {
     {
       path: "/",
       element: <HomeLayout />,
+      errorElement: <Error />,
       children: [
         {
           index: true,
@@ -53,14 +54,12 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+      errorElement: <Error />,
     },
     {
       path: "/register",
       element: <Register />,
-    },
-    {
-      path: "*",
-      element: <Error />,
+      errorElement: <Error />,
     },
   ]);
   return <RouterProvider router={router} />;
