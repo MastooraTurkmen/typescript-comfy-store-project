@@ -4,11 +4,15 @@ import {
   customFetch,
   formatAsDollars,
   type SingleProductResponse,
+  type CartItem,
 } from "../utils";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "../components/ui/separator";
 import { SelectProductAmount, SelectProductColor } from "../components";
+import { Mode } from "../components/SelectProductAmount";
+import { addItem } from "../features/cart/cartSlice";
+import { useAppDispatch } from "../hooks";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const response = await customFetch<SingleProductResponse>(
@@ -24,9 +28,21 @@ function SingleProduct() {
   const dollarsAmount = formatAsDollars(price);
   const [productColor, setProductColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
+  const dispatch = useAppDispatch();
+
+  const cartProduct: CartItem = {
+    cartID: product.id + productColor,
+    productID: product.id,
+    image,
+    title,
+    price,
+    productColor,
+    amount,
+    company,
+  };
 
   const addToCart = () => {
-    console.log("Added to cart");
+    dispatch(addItem(cartProduct));
   };
 
   return (
@@ -58,10 +74,18 @@ function SingleProduct() {
           <p className="mt-6 leading-8">{description}</p>
 
           {/* COLORS */}
-          <SelectProductColor colors={colors} productColor={productColor} setProductColor={setProductColor} />
+          <SelectProductColor
+            colors={colors}
+            productColor={productColor}
+            setProductColor={setProductColor}
+          />
 
           {/* AMOUNT */}
-          <SelectProductAmount />
+          <SelectProductAmount
+            mode={Mode.SingleProduct}
+            amount={amount}
+            setAmount={setAmount}
+          />
 
           {/* CART BUTTON */}
           <Button size="lg" className="mt-10" onClick={addToCart}>
