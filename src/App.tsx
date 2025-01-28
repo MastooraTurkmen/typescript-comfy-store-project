@@ -20,6 +20,10 @@ import { loader as landingLoader } from "./pages/Landing";
 import { loader as productsLoader } from "./pages/Products";
 import { loader as singleProductLoader } from "./pages/SingleProduct";
 
+// actions
+
+import { action as registerUser } from "./pages/Register";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -37,7 +41,7 @@ function App() {
           path: "products",
           element: <Products />,
           errorElement: <ErrorElement />,
-          loader: productsLoader
+          loader: productsLoader,
         },
         {
           path: "products/:id",
@@ -76,6 +80,7 @@ function App() {
       path: "/register",
       element: <Register />,
       errorElement: <Error />,
+      action: registerUser,
     },
   ]);
   return <RouterProvider router={router} />;
