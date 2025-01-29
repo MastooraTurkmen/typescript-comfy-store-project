@@ -20,22 +20,43 @@ import { useAppDispatch } from "../hooks";
 import { AxiosResponse } from "axios";
 import { toast } from "../hooks/use-toast";
 
+export const action =
+  (store: ReduxStore): ActionFunction =>
+  async ({ request }): Promise<Response | null> => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    try {
+      const response: AxiosResponse = await customFetch.post(
+        "/auth/local",
+        data
+      );
+      const username = response.data.user.username;
+      const jwt = response.data.jwt;
+      store.dispatch(loginUser({ username, jwt }));
+      return redirect("/");
+    } catch (error) {
+      console.log(error);
+      toast({ description: "Login Failed" });
+      return null;
+    }
+  };
+
 function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loginAsGuestUser = async ():Promise<void> => {
+  const loginAsGuestUser = async (): Promise<void> => {
     try {
       const response: AxiosResponse = await customFetch.post("/auth/local", {
         identifier: "test@test.com",
-        password: "secret"
+        password: "secret",
       });
-      const username = response.data.user.username
-      const jwt = response.data.jwt
-      dispatch(loginUser({ username, jwt }))
-      navigate('/')
+      const username = response.data.user.username;
+      const jwt = response.data.jwt;
+      dispatch(loginUser({ username, jwt }));
+      navigate("/");
     } catch (error) {
       console.log(error);
-      toast({description: "Login Failed"})
+      toast({ description: "Login Failed" });
     }
   };
 
@@ -47,8 +68,13 @@ function Login() {
         </CardHeader>
         <CardContent>
           <Form method="post">
-            <FormInput type="email" label="email" name="identifier" />
-            <FormInput type="password" name="password" />
+            <FormInput
+              type="email"
+              label="email"
+              name="identifier"
+              defaultValue={""}
+            />
+            <FormInput type="password" name="password" defaultValue={""} />
             <SubmitBtn text="Login" className="w-full mt-4" />
             <Button
               type="button"
