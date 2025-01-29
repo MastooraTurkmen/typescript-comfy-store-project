@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useToast } from "../../hooks/use-toast";
+import { toast } from "../../hooks/use-toast";
+
 export type User = {
   username: string;
   jwt: string;
@@ -23,9 +24,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action: PayloadAction<User>) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { toast } = useToast();
-
       const user = action.payload;
       state.user = user;
       localStorage.setItem("user", JSON.stringify(user));
