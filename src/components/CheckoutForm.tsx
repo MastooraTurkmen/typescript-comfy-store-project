@@ -12,6 +12,47 @@ export const action =
     const formData = await request.formData();
     const name = formData.get("name") as string;
     const address = formData.get("address") as string;
+
+    if (!name || !address) {
+      toast({ description: "Please fill out all fields" });
+      return redirect("/login");
+    }
+
+    const user = store.getState().userState.user;
+
+    if (!user) {
+      toast({ description: "Please log in to place an order" });
+      return redirect("/login");
+    }
+
+    const { cartItems, orderTotal, numItemsInCart } =
+      store.getState().cartState;
+    const info: Checkout = {
+      name,
+      address,
+      chargeTotal: orderTotal,
+      orderTotal: formatAsDollars(orderTotal),
+      cartItems,
+      numItemsInCart,
+    };
+
+    try {
+      const result = await customFetch.post(
+        "/orders",
+        { data: info },
+        { headers: { Authorization: `Bearer ${user.jwt}` } }
+      );
+      console.log(result);
+      store.dispatch(clearCart());
+      toast({ description: "Order placed" });
+      redirect("/orders");
+    } catch (error) {
+      console.log(error);
+
+      toast({ description: "Order failed" });
+      return null;
+    }
+
     return null;
   };
 
