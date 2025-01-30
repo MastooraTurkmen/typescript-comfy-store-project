@@ -79,3 +79,26 @@ export type Checkout = {
   cartItems: CartItem[];
   numItemsInCart: number;
 };
+
+export type Order = {
+  id: number;
+  attributes: {
+    address: string;
+    cartItems: CartItem[];
+    createdAt: string;
+    name: string;
+    numItemsInCart: number;
+    orderTotal: string;
+    publishedAt: string;
+    updatedAt: string;
+  };
+};
+
+export type OrdersMeta = {
+  pagination: Pagination;
+};
+
+export type OrdersResponse = {
+  data: Order[];
+  meta: OrdersMeta;
+};
