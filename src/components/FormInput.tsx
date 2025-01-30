@@ -5,7 +5,7 @@ type FormInputProps = {
   name: string;
   label?: string;
   type: string;
-  defaultValue: string;
+  defaultValue?: string;
 };
 
 function FormInput({ label, name, type, defaultValue }: FormInputProps) {
