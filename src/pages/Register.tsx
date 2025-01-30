@@ -11,6 +11,7 @@ import { customFetch } from "../utils";
 import { AxiosError } from "axios";
 import { toast } from "../hooks/use-toast";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const action: ActionFunction = async ({
   request,
 }): Promise<Response | null> => {
@@ -42,9 +43,9 @@ function Register() {
         </CardHeader>
         <CardContent>
           <Form method="post">
-            <FormInput type="text" name="username" />
-            <FormInput type="email" name="email" />
-            <FormInput type="password" name="password" />
+            <FormInput type="text" name="username" defaultValue={""} />
+            <FormInput type="email" name="email" defaultValue={""} />
+            <FormInput type="password" name="password" defaultValue={""} />
             <SubmitBtn text="Register" className="w-full mt-4" />
             <p className="text-center mt-4">
               Already a member?{" "}
