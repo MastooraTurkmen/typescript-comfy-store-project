@@ -21,6 +21,7 @@ import { loader as landingLoader } from "./pages/Landing";
 import { loader as productsLoader } from "./pages/Products";
 import { loader as singleProductLoader } from "./pages/SingleProduct";
 import { loader as checkoutLoader } from "./pages/Checkout";
+import { loader as ordersLoader } from "./pages/Orders";
 
 // actions
 
@@ -74,6 +75,7 @@ function App() {
           path: "orders",
           element: <Orders />,
           errorElement: <ErrorElement />,
+          loader: ordersLoader(store),
         },
       ],
     },
