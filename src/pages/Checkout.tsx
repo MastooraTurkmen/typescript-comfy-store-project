@@ -3,7 +3,6 @@ import { CheckoutForm, SectionTitle, CartTotals } from "../components";
 import { LoaderFunction, redirect } from "react-router-dom";
 import { type ReduxStore } from "../store";
 import { toast } from "../hooks/use-toast";
-import { clearCart } from "../features/cart/cartSlice";
 
 export const loader =
   (store: ReduxStore): LoaderFunction =>
