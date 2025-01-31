@@ -1,3 +1,7 @@
+# Typescript Comfy Sloth
+
+[Live Link](https://typescript-store-project.netlify.app/)
+
 ## Setup
 
 ```sh
